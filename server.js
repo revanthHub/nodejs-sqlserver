@@ -32,7 +32,16 @@ var dbConfig = {
     server: 'CHAITHANYAB-PC\\MSSQLSERVER11', 
     database: 'users' 
     };   
+  
+    app.get('/', function(req, res, next){	
+  
+      res.render('user/home', {
+        title: 'Home'
+      }) ;sql.close(); 
+    })   
 
+
+    
     app.get('/users', function (req, res) {
       sql.connect(dbConfig, function() {
           var request = new sql.Request();
@@ -58,7 +67,7 @@ var dbConfig = {
       });
   })
 
-  app.get('/', function (req, res) {
+  app.get('/groupid', function (req, res) {
     sql.connect(dbConfig, function() {
         var request = new sql.Request();
         var stringRequest = 'SELECT id,FirstName,LastName,Age FROM usertable INNER JOIN grouptable ON usertable.groupId = 1;'; 
@@ -72,7 +81,7 @@ var dbConfig = {
               })
             } else {
              
-              res.render('user/navigation', {
+              res.render('user/groupid', {
                 title: 'User List', 
                 data: rows.recordset 
                 
@@ -86,10 +95,10 @@ var dbConfig = {
 
 app.use('/users', routes);
 
+
+
 app.get('/users/add', function(req, res, next){	
 
-  
-  
 	res.render('user/add', {
 		title: 'Add New User',
 	  groupId:'',
@@ -127,6 +136,8 @@ app.post('/add',urlencodedParser, function(req , res){
      
                 
 });  
+
+
    
 app.get('/users/edit/:id', function(req, res, next){
   sql.connect(dbConfig, function() {
@@ -176,7 +187,11 @@ app.post('/users/edit/:id',urlencodedParser, function(req, res, next) {
       }sql.close();
     });
   })         
-})         
+})     
+
+
+
+
 const poolPromise = new sql.ConnectionPool(dbConfig)
 .connect()
 .then(pool => {
@@ -201,6 +216,5 @@ app.get('/users/delete/:id', async (req, res) => {
 })
 
 
-   
 
 module.exports = app;     

@@ -1,44 +1,45 @@
-.sidenav {
-  height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 160px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+.sidebar {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
   left: 0;
-  background-color: #111; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 16px;
 }
 
-/* The navigation menu links */
-.sidenav a {
+/* Style sidebar links */
+.sidebar a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
-  font-size: 25px;
+  font-size: 20px;
   color: #818181;
   display: block;
 }
 
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
+/* Style links on mouse-over */
+.sidebar a:hover {
   color: #f1f1f1;
 }
 
-/* Style page content */
-.conmtainer {
-  margin-left: 160px; /* Same as the width of the sidebar */
+/* Style the main content */
+.main {
+  margin-left: 160px; /* Same as the width of the sidenav */
   padding: 0px 10px;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+/* Add media queries for small screens (when the height of the screen is less than 450px, add a smaller padding and font-size) */
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
 }
-div.container {
+
+/* div.container {
     width:98%; 
     margin:1%;
-  }
+  } */
   table#table {
     text-align:center; 
     margin-left:auto; 

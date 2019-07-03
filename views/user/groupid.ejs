@@ -1,0 +1,34 @@
+<html>
+    <body>
+           
+  <div class="container">
+    <h1>Users Table</h1>
+    <table id="table" border="1" cellpadding="7" cellspacing="7"style="text-align: center">
+      <tr>
+        
+        <th>ID</th>
+        
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Age</th>
+       
+      </tr>
+      <% if (data) { %>
+        <% data.forEach(function(user){ %>
+          <tr>
+              <td><%= user.id %></td>
+              <!-- <td><%= user.groupId %></td> -->
+            <td><%= user.FirstName %></td>
+            <td><%= user.LastName %></td>
+            <td><%= user.Age %></td> 
+            
+          </tr> 
+        <% }) %>
+        <% } %>
+    </table>
+  
+   </div>
+
+
+  
+    </body></html> 

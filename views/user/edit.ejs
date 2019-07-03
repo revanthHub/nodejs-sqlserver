@@ -1,6 +1,14 @@
 <%- include ../layouts/header.ejs %>
 <!-- <link rel="stylesheet" href="../styles/style.css"> -->
-
+<div class="header clearfix" style="background-color:darkgray">
+        <nav>
+            <ul class="nav nav-pills pull-left" >
+                <li role="presentation"><a href="/">Home</a></li>
+            </ul>
+			<h3 class="text-muted"><a href="/users">UserList</a></h3>
+			<h3 class="text-muted"><a href="/">groupId</a></h3>
+        </nav>
+    </div>
 <div class="container">
 <form action="/users/edit/<%=id %>" method="post" style="text-align: center;">
 	        <b>groupID: </b> <input name="groupId" type="text" value="<%= groupId%>" /> <br />

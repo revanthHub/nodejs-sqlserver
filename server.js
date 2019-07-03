@@ -25,7 +25,7 @@ var server = app.listen(8080, function () {
   console.log("app listening at http://%s:%s", host, port)
 });
    
-     
+       
 var dbConfig = { 
     user: 'sa',
     password:'revanth100',
@@ -58,6 +58,32 @@ var dbConfig = {
       });
   })
 
+  app.get('/', function (req, res) {
+    sql.connect(dbConfig, function() {
+        var request = new sql.Request();
+        var stringRequest = 'SELECT id,FirstName,LastName,Age FROM usertable INNER JOIN grouptable ON usertable.groupId = 1;'; 
+        request.query(stringRequest, function(err,rows) {
+          var data=rows.recordset;
+            if (err) {
+              
+              res.render('user/list', {
+                title: 'User List', 
+                data: ''
+              })
+            } else {
+             
+              res.render('user/navigation', {
+                title: 'User List', 
+                data: rows.recordset 
+                
+              })
+              // res.send(data)
+            }sql.close();
+            
+        });
+    });
+})
+
 app.use('/users', routes);
 
 app.get('/users/add', function(req, res, next){	
@@ -66,7 +92,7 @@ app.get('/users/add', function(req, res, next){
   
 	res.render('user/add', {
 		title: 'Add New User',
-	
+	  groupId:'',
 		FirstName: '',
     LastName: '',
     Age:'',	
@@ -81,7 +107,7 @@ app.post('/add',urlencodedParser, function(req , res){
     var request = new sql.Request();
     
 		
-    request.query( "INSERT INTO [usertable] (FirstName,Lastname,Age) values(' "+req.body.FirstName+"',' "+req.body.LastName + " ','"+ req.body.Age +"') ", function(err, data) {
+    request.query( "INSERT INTO [usertable] (groupId,FirstName,Lastname,Age) values(' "+req.body.groupId+"',' "+req.body.FirstName+"',' "+req.body.LastName + " ','"+ req.body.Age +"') ", function(err, data) {
       if (err) {
          
         res.send('<h2>ERROR:404--- Duplicates are not allowed</h2>');
@@ -94,7 +120,7 @@ app.post('/add',urlencodedParser, function(req , res){
         
         
        
-      res.redirect('/users')
+        res.send('<div><b>Data added Successfully</b><a href="/users"><input type="button" name="button" value="back" /></a></div>');
       }sql.close();
     });
 });
@@ -120,6 +146,7 @@ app.get('/users/edit/:id', function(req, res, next){
        
          
         id: data[0].id,
+        groupId:data[0].groupId,
         FirstName: data[0].FirstName,
         LastName: data[0].LastName,
         Age: data[0].Age,
@@ -135,7 +162,7 @@ app.post('/users/edit/:id',urlencodedParser, function(req, res, next) {
   sql.connect(dbConfig, function() { 
     var request = new sql.Request();
      
-  request.query("UPDATE [usertable] SET FirstName = '" + req.body.FirstName  +  "' , LastName=  '" + req.body.LastName + "',Age='" +req.body.Age + "' WHERE id = " +   req.params.id, function(err,rows) {
+  request.query("UPDATE [usertable] SET groupId = '" + req.body.groupId  +  "' ,FirstName = '" + req.body.FirstName  +  "' , LastName=  '" + req.body.LastName + "',Age='" +req.body.Age + "' WHERE id = " +   req.params.id, function(err,rows) {
      
       if (err) {
        
@@ -143,10 +170,12 @@ app.post('/users/edit/:id',urlencodedParser, function(req, res, next) {
       } else {
          
       
-        res.redirect('/users');
+        res.send('<div><b>Data inserted Successfully</b><a href="/users"><input type="button" name="button" value="back" /></a></div>');
+
+          
       }sql.close();
     });
-  })        
+  })         
 })         
 const poolPromise = new sql.ConnectionPool(dbConfig)
 .connect()
@@ -164,7 +193,7 @@ app.get('/users/delete/:id', async (req, res) => {
         .input('input_parameter', sql.Int, req.query.input_parameter)
         .query("delete from [usertable] where id="+req.params.id,user)      
 
-    res.redirect('/users') 
+        res.send('<div><b>Data deleted Successfully</b><a href="/users"><input type="button" name="button" value="back" /></a></div>'); 
   } catch (err) {
     res.status(500)
     res.send(err.message)

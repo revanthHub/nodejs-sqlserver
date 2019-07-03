@@ -1,37 +1,41 @@
-<!-- <%- include ../layouts/header.ejs %> -->
-
 <html>
     <link rel="stylesheet" href="../styles/style.css">
 <body >
+        <div class="sidenav">
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Clients</a>
+                <a href="#">Contact</a>
+              </div>
   <div class="container">
     <h1>Users Table</h1>
     <table id="table" border="1" cellpadding="7" cellspacing="7"style="text-align: center">
       <tr>
         
         <th>ID</th>
-        <th>groupId</th>
+        <!-- <th>groupId</th> -->
         <th>FirstName</th>
         <th>LastName</th>
         <th>Age</th>
-        <th>Action</th>
+        <!-- <th>Action</th> -->
       </tr>
       <% if (data) { %>
         <% data.forEach(function(user){ %>
           <tr>
               <td><%= user.id %></td>
-              <td><%= user.groupId %></td>
+              <!-- <td><%= user.groupId %></td> -->
             <td><%= user.FirstName %></td>
             <td><%= user.LastName %></td>
             <td><%= user.Age %></td>
             
-            <td>
+            <!-- <td>
               <div style="float:left">
                 <a href='/users/edit/<%= user.id %>'><button type="submit"class="btn btn-info"><i class="fa fa-edit"></i>Edit</button></a> &nbsp;	
                 		 <a href='/users/delete/<%= user.id %>'onClick="return confirm('Are you sure you want to delete?')" ><button type="submit" class="btn btn-default"><i class="fa fa-trash"></i> Delete</button></a>				
                
              
               </div>
-            </td>
+            </td> -->
           </tr>
         <% }) %>
         <% } %>
